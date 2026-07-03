@@ -1,0 +1,7 @@
+[
+  {
+    "directory": "C:/Users/juanc/OneDrive/Escritorio/Parcial_ SO",
+    "command": "C:/msys64/ucrt64/bin/g++.exe -std=c++17 -IC:/msys64/ucrt64/include/c++/16.1.0 -IC:/msys64/ucrt64/include/c++/16.1.0/x86_64-w64-mingw32 -IC:/msys64/ucrt64/include/c++/16.1.0/backward -IC:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/16.1.0/include -IC:/msys64/ucrt64/include -IC:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/16.1.0/include-fixed -c mlq.cpp",
+    "file": "C:/Users/juanc/OneDrive/Escritorio/Parcial_ SO/mlq.cpp"
+  }
+]

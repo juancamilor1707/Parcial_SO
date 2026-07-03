@@ -1,0 +1,8 @@
+# Archivo: mlq005.txt
+# 09102024
+# etiqueta; burst time (BT); arrival time (AT); Queue (Q); Priority (5 > 1)
+p1; 50; 0; 1; 5
+p2; 22; 2; 1; 4
+p3; 15; 4; 2; 3
+p4; 10; 6; 2; 2
+p5; 12; 8; 3; 1
