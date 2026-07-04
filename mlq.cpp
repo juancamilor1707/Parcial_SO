@@ -5,15 +5,35 @@
 #include <string>
 #include <algorithm>
 #include <climits>
+#include <ctime>
+#include <filesystem>
 
 using namespace std;
+namespace fs = filesystem;
+
+bool crearCarpetaSalida() {
+    error_code ec;
+    if (!fs::create_directories("salida", ec) && ec) {
+        cerr << "No se pudo crear la carpeta 'salida': " << ec.message() << "\n";
+        return false;
+    }
+    return true;
+}
+
+string generarNombreSalida(const string& base) {
+    auto now = time(nullptr);
+    auto tm = localtime(&now);
+    stringstream ss;
+    ss << "salida/" << base << "_" 
+       << put_time(tm, "%Y%m%d_%H%M%S") 
+       << ".txt";
+    return ss.str();
+}
 
 // Politica de una cola: Round Robin, Shortest Job First o Prioridad.
 enum Politica { RR, SJF, PRIORIDAD };
 
-// ------------------------------------------------------------
 //  Clase Proceso: guarda los datos de entrada y las metricas.
-// ------------------------------------------------------------
 class Proceso {
 public:
     string etiqueta;
@@ -27,10 +47,9 @@ public:
           restante(bt), WT(0), CT(0), RT(0), TAT(0), iniciado(false) {}
 };
 
-// ------------------------------------------------------------
+
 //  Clase PlanificadorMLQ: contiene los procesos y ejecuta el
 //  algoritmo de colas multinivel para el esquema elegido.
-// ------------------------------------------------------------
 class PlanificadorMLQ {
     vector<Proceso> procesos;
     Politica politica[3];   // politica de cada cola (Q1,Q2,Q3)
@@ -153,6 +172,10 @@ public:
         int n = procesos.size();
 
         ofstream out(salida);
+        if (!out) {
+            cerr << "No se pudo escribir en: " << salida << "\n";
+            return;
+        }
         string cab = "# etiqueta; BT; AT; Q; Pr; WT; CT; RT; TAT";
         out << cab << "\n";
         cout << cab << "\n";
@@ -181,9 +204,18 @@ int main(int argc, char* argv[]) {
         cerr << "Uso: " << argv[0] << " <entrada.txt> <esquema:1|2> [salida.txt]\n";
         return 1;
     }
+    
+    if (!crearCarpetaSalida()) return 1;
+    
     string entrada = argv[1];
     int esquema    = stoi(argv[2]);
-    string salida  = (argc >= 4) ? argv[3] : "salida.txt";
+    string salida;
+    
+    if (argc >= 4) {
+        salida = string("salida/") + argv[3];  // meter en carpeta salida
+    } else {
+        salida = generarNombreSalida("resultado");  // generar único automáticamente
+    }
 
     PlanificadorMLQ plan(esquema);
     if (!plan.cargar(entrada)) return 1;
