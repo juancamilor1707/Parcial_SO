@@ -1,0 +1,8 @@
+# Archivo: mlq_propio3.txt
+# etiqueta; burst time (BT); arrival time (AT); Queue (Q); Priority (5 > 1)
+Q; 5; 0; 1; 4
+R; 8; 1; 1; 5
+S; 13; 2; 2; 2
+T; 7; 4; 2; 3
+U; 16; 5; 3; 1
+V; 4; 9; 3; 2
